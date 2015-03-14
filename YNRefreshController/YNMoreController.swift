@@ -67,6 +67,7 @@ class YNMoreController : NSObject {
         self.scrollView = scrollView
         self.originalInsetBottom = scrollView.contentInset.bottom
         self.refreshView = YNRefreshView()
+        refreshView.textLabel.text = "上拉加载更多..."
         scrollView.addSubview(refreshView)
         layoutSubviews()
         addObservers()
