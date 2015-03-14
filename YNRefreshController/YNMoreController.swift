@@ -90,8 +90,21 @@ class YNMoreController : NSObject {
     
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         if keyPath == "contentOffset" {
-            var distanceToBottom = scrollView.contentOffset.y + scrollView.bounds.size.height - scrollView.contentSize.height
+            
+            if scrollView.contentOffset.y > 0 && scrollView.contentSize.height > scrollView.bounds.size.height {
+                if refreshView.hidden {
+                    refreshView.hidden = false
+                }
+            } else {
+                if !refreshView.hidden {
+                    refreshView.hidden = true
+                }
+                return
+            }
+            
             if !self.isLoading {
+
+                var distanceToBottom = scrollView.contentOffset.y + scrollView.bounds.size.height - scrollView.contentSize.height
                 if distanceToBottom > additionalInsetBottom {
                     if scrollView.dragging {
                         self.refreshState = .Dragging
